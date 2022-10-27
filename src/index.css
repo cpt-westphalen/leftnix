@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.search-expanded {
+		@apply w-40 px-3 py-1 bg-dark-100 border border-solid border-red-neon shadow-md shadow-red rounded-2xl transition duration-200;
+	}
+}

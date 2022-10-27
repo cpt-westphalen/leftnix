@@ -3,6 +3,9 @@ module.exports = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			fontFamily: {
+				logo: "Bebas Neue",
+			},
 			colors: {
 				red: {
 					DEFAULT: "#AA0000",
@@ -11,7 +14,9 @@ module.exports = {
 				},
 				dark: {
 					DEFAULT: "#070707",
+					100: "#101010",
 					500: "#222222",
+					600: "#333333",
 				},
 			},
 		},

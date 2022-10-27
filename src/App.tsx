@@ -1,5 +1,11 @@
+import { Gallery } from "./components/Gallery";
+
 function App() {
-	return <div className='bg-red-dark'>hello world!</div>;
+	return (
+		<>
+			<Gallery />
+		</>
+	);
 }
 
 export default App;
