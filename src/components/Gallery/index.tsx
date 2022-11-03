@@ -1,4 +1,5 @@
 import { Header } from "../Header";
+import { MovieGalleries } from "./MovieGalleries";
 
 export const Gallery = () => {
 	return (
@@ -7,7 +8,4 @@ export const Gallery = () => {
 			<MovieGalleries />
 		</div>
 	);
-};
-const MovieGalleries = () => {
-	return <div></div>;
 };
