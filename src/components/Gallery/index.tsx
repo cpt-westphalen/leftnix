@@ -9,12 +9,20 @@ import { useEffect, useState } from "react";
 import { MovieTypes } from "../../types";
 
 export const Gallery = () => {
-	const [movieList, setMovieList] = useState<MovieTypes[]>([]);
+	const [movieLists, setMovieLists] = useState<MovieTypes[][]>([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		fetchMoviesFromTmdbApi(POPULAR_API_URL)
-			.then((data) => {
-				setMovieList(data);
+		const promises = POPULAR_API_URL.map((url) => {
+			return fetchMoviesFromTmdbApi(url);
+		});
+
+		Promise.all(promises)
+			.then((lists) => {
+				setMovieLists((prevState) => {
+					setLoading(false);
+					return lists;
+				});
 			})
 			.catch((e) => {
 				console.error(e);
@@ -24,7 +32,14 @@ export const Gallery = () => {
 	return (
 		<div className='bg-dark-50 min-h-screen flex flex-col'>
 			<Header />
-			<MovieGalleries movies={movieList} />
+			{loading
+				? "Loading..."
+				: movieLists.map((movieList) => (
+						<MovieGalleries
+							movies={movieList}
+							key={"list-" + movieList[0].title}
+						/>
+				  ))}
 		</div>
 	);
 };
