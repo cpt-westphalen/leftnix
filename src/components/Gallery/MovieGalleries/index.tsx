@@ -1,13 +1,20 @@
 import { MovieCard } from "./MovieCard";
 
-import * as Mock from "../../../utils/mocks";
+import { MovieTypes } from "../../../types";
 
-export const MovieGalleries = () => {
+type MovieGalleriesProps = {
+	movies: MovieTypes[];
+};
+
+export const MovieGalleries = ({ movies }: MovieGalleriesProps) => {
 	return (
 		<div className='flex flex-row overflow-x-auto gap-2'>
-			<MovieCard movie={Mock.movie} />
-			<MovieCard movie={Mock.movie} />
-			<MovieCard movie={Mock.movie} />
+			{movies.map((movie) => (
+				<MovieCard
+					movie={movie}
+					key={movie.title}
+				/>
+			))}
 		</div>
 	);
 };
