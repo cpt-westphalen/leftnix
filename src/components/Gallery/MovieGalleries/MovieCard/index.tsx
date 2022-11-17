@@ -22,9 +22,9 @@ export const MovieCard = ({ movie }: { movie: MovieTypes }) => {
 		<div className='p-3 bg-dark flex flex-col justify-start items-start flex-shrink-0 basis-52 rounded-sm'>
 			<img src={imgPath}></img>
 			<h3 className='whitespace-pre'>
-				<span className='text-red'>{superTitle}</span>
+				<span className='text-sm'>{superTitle}</span>
 				{"\n"}
-				{title}
+				<p className='text-2xl'>{title}</p>
 			</h3>
 			{/* <p>{movie.overview}</p> */}
 			<div>--slider--</div>
