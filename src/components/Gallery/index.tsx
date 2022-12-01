@@ -9,13 +9,13 @@ import { createContext, useEffect, useMemo, useState } from "react";
 import { MovieTypes } from "../../types";
 
 export const SearchContext = createContext<React.Dispatch<
-	React.SetStateAction<string | undefined>
+	React.SetStateAction<string>
 > | null>(null);
 
 export const Gallery = () => {
 	const [movies, setMovies] = useState<MovieTypes[]>([]);
 	const [loading, setLoading] = useState(true);
-	const [search, setSearch] = useState<string>();
+	const [search, setSearch] = useState<string>("");
 
 	useEffect(() => {
 		const promises = POPULAR_API_URL.map((url) => {
@@ -67,7 +67,7 @@ export const Gallery = () => {
 				/>
 			);
 		});
-	}, [search]);
+	}, [movies, search]);
 
 	return (
 		<div className='bg-dark-50 min-h-screen flex flex-col'>
