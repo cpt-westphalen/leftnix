@@ -5,12 +5,17 @@ import { MovieGalleries } from "./MovieGalleries";
 
 import { POPULAR_API_URL } from "../../utils/api"; // Query do TMDB
 import { fetchMoviesFromTmdbApi } from "../../utils/api";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useMemo, useState } from "react";
 import { MovieTypes } from "../../types";
 
+export const SearchContext = createContext<React.Dispatch<
+	React.SetStateAction<string | undefined>
+> | null>(null);
+
 export const Gallery = () => {
-	const [movieLists, setMovieLists] = useState<MovieTypes[][]>([]);
+	const [movies, setMovies] = useState<MovieTypes[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [search, setSearch] = useState<string>();
 
 	useEffect(() => {
 		const promises = POPULAR_API_URL.map((url) => {
@@ -19,9 +24,11 @@ export const Gallery = () => {
 
 		Promise.all(promises)
 			.then((lists) => {
-				setMovieLists((prevState) => {
+				setMovies((prevState) => {
+					// [ [ lista1 ], [ lista2 ], [ lista3 ] ]
+					const singleList = [].concat(...lists);
 					setLoading(false);
-					return lists;
+					return singleList;
 				});
 			})
 			.catch((e) => {
@@ -29,17 +36,45 @@ export const Gallery = () => {
 			});
 	}, []);
 
+	const organizeGalleries = () => {
+		const filteredMovies = search
+			? movies.filter((movie) => {
+					return movie.title
+						.toLowerCase()
+						.includes(search.toLowerCase());
+			  })
+			: movies;
+
+		if (filteredMovies.length > 10) {
+			let res = [];
+			for (let i = 0; i < filteredMovies.length; i += 10) {
+				const page = filteredMovies.slice(i, i + 10);
+				res.push(page);
+			}
+			return res as MovieTypes[][];
+		} else {
+			return [filteredMovies];
+		}
+	};
+
+	const movieGalleriesArray = useMemo(() => {
+		const galleriesArray = organizeGalleries();
+		return galleriesArray.map((list, index) => {
+			return (
+				<MovieGalleries
+					movies={list}
+					key={`gallery-${index}`}
+				/>
+			);
+		});
+	}, [search]);
+
 	return (
 		<div className='bg-dark-50 min-h-screen flex flex-col'>
-			<Header />
-			{loading
-				? "Loading..."
-				: movieLists.map((movieList) => (
-						<MovieGalleries
-							movies={movieList}
-							key={"list-" + movieList[0].title}
-						/>
-				  ))}
+			<SearchContext.Provider value={setSearch}>
+				<Header />
+				{loading ? "Loading..." : movieGalleriesArray}
+			</SearchContext.Provider>
 		</div>
 	);
 };

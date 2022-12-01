@@ -1,14 +1,19 @@
 import "./styles.css";
 import { BiSearch } from "react-icons/bi";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { SearchContext } from "../../Gallery";
 
 export const Search = () => {
 	const [isExpanded, setIsExpanded] = useState(false);
 	const searchRef = useRef<HTMLInputElement>(null);
+	const setSearch = useContext(SearchContext) as React.Dispatch<string>;
 
 	function handleBlur(event: React.FocusEvent<HTMLInputElement>) {
 		if (!event.target.value.trim()) {
 			setIsExpanded(false);
+			setSearch("");
+		} else {
+			setSearch(event.target.value.trim());
 		}
 	}
 
@@ -18,6 +23,19 @@ export const Search = () => {
 			setTimeout(() => {
 				searchRef.current?.focus();
 			}, 100);
+		}
+	}
+
+	function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+		if (event.key == "Enter") {
+			event.preventDefault();
+			if (event.currentTarget.value) {
+				if (setSearch) setSearch(event.currentTarget.value);
+				else
+					console.error(
+						"Something went wrong with the search component"
+					);
+			}
 		}
 	}
 
@@ -34,6 +52,7 @@ export const Search = () => {
 					type='text'
 					className='bg-inherit w-full mx-1 outline-none'
 					onBlur={handleBlur}
+					onKeyDown={handleKeyDown}
 				/>
 			)}
 		</div>
