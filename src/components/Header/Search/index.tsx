@@ -42,6 +42,7 @@ export const Search = () => {
 	return (
 		<div className={`search-${isExpanded ? "expanded" : "collapsed"}`}>
 			<button
+				className=''
 				tabIndex={0}
 				onClick={handleExpandToggle}>
 				<BiSearch size={24} />

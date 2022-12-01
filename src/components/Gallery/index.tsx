@@ -73,7 +73,9 @@ export const Gallery = () => {
 		<div className='bg-dark-50 min-h-screen flex flex-col'>
 			<SearchContext.Provider value={setSearch}>
 				<Header />
-				{loading ? "Loading..." : movieGalleriesArray}
+				<div className='shadow-inner shadow-red pt-3'>
+					{loading ? "Loading..." : movieGalleriesArray}
+				</div>
 			</SearchContext.Provider>
 		</div>
 	);

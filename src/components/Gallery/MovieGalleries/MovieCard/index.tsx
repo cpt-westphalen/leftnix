@@ -1,5 +1,6 @@
 import { MovieTypes } from "../../../../types";
 import { BASE_IMG_URL } from "../../../../utils/api";
+import { Slider } from "./Slider";
 
 function useHeroTitle(title: string): [string | null, string] {
 	const heroTitleIndex =
@@ -18,18 +19,22 @@ export const MovieCard = ({ movie }: { movie: MovieTypes }) => {
 	const [superTitle, title] = useHeroTitle(movie.title);
 
 	return (
-		<div className='p-3 max-h-96 bg-dark flex flex-col justify-start items-start flex-shrink-0 flex-grow-0 basis-52 rounded-sm overflow-hidden'>
-			<img
-				className='h-64 w-full object-cover object-top'
-				src={imgPath}
-			/>
-			<h3 className='whitespace-pre'>
-				<span className='text-sm'>{superTitle}</span>
-				{"\n"}
-				<p className='text-2xl whitespace-normal'>{title}</p>
-			</h3>
-			{/* <p>{movie.overview}</p> */}
-			<div>--slider--</div>
+		<div className='mx-2 p-3 h-86 bg-dark flex flex-col justify-start items-center flex-shrink-0 flex-grow-0 basis-56 rounded-sm overflow-hidden'>
+			<div className='w-full relative'>
+				<img
+					className='h-64 w-full object-cover object-top'
+					src={imgPath}
+				/>
+				<div className='absolute top-[50%] left-0 right-0 bottom-0 bg-gradient-to-t from-black to-transparent' />
+				<h3 className='whitespace-pre absolute bottom-0 left-0 right-0 p-1'>
+					<span className='text-sm'>{superTitle}</span>
+					{"\n"}
+					<p className='text-2xl whitespace-normal'>{title}</p>
+				</h3>
+			</div>
+			<div className='py-1 flex-1 flex justify-center items-end'>
+				<Slider rating={movie.vote_average} />
+			</div>
 		</div>
 	);
 };
