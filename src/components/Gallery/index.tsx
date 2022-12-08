@@ -7,15 +7,21 @@ import { POPULAR_API_URL } from "../../utils/api"; // Query do TMDB
 import { fetchMoviesFromTmdbApi } from "../../utils/api";
 import { createContext, useEffect, useMemo, useState } from "react";
 import { MovieTypes } from "../../types";
+import { MovieModal } from "../MovieModal";
 
 export const SearchContext = createContext<React.Dispatch<
 	React.SetStateAction<string>
+> | null>(null);
+
+export const SetSelectedMovieContext = createContext<React.Dispatch<
+	React.SetStateAction<MovieTypes | null>
 > | null>(null);
 
 export const Gallery = () => {
 	const [movies, setMovies] = useState<MovieTypes[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [search, setSearch] = useState<string>("");
+	const [selectedMovie, setSelectedMovie] = useState<MovieTypes | null>(null);
 
 	useEffect(() => {
 		const promises = POPULAR_API_URL.map((url) => {
@@ -73,7 +79,10 @@ export const Gallery = () => {
 		<div className='bg-dark-50 min-h-screen flex flex-col'>
 			<SearchContext.Provider value={setSearch}>
 				<Header />
-				{loading ? "Loading..." : movieGalleriesArray}
+				<SetSelectedMovieContext.Provider value={setSelectedMovie}>
+					{loading ? "Loading..." : movieGalleriesArray}
+				</SetSelectedMovieContext.Provider>
+				{selectedMovie && <MovieModal movie={selectedMovie} />}
 			</SearchContext.Provider>
 		</div>
 	);
