@@ -8,7 +8,7 @@ type MovieGalleriesProps = {
 
 export const MovieGalleries = ({ movies }: MovieGalleriesProps) => {
 	return (
-		<div className='flex flex-row overflow-x-auto mb-2'>
+		<div className='flex flex-row overflow-x-auto'>
 			{movies.map((movie) => (
 				<MovieCard
 					movie={movie}

@@ -19,7 +19,7 @@ export const MovieCard = ({ movie }: { movie: MovieTypes }) => {
 	const [superTitle, title] = useHeroTitle(movie.title);
 
 	return (
-		<div className='mx-2 p-3 h-86 bg-dark flex flex-col justify-start items-center flex-shrink-0 flex-grow-0 basis-56 rounded-sm overflow-hidden'>
+		<div className='m-2 p-3 h-86 bg-dark flex flex-col justify-start items-center flex-shrink-0 flex-grow-0 basis-56 rounded-sm overflow-hidden hover:cursor-pointer transition hover:shadow hover:shadow-red'>
 			<div className='w-full relative'>
 				<img
 					className='h-64 w-full object-cover object-top'

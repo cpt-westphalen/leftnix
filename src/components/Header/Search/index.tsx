@@ -29,13 +29,9 @@ export const Search = () => {
 	function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
 		if (event.key == "Enter") {
 			event.preventDefault();
-			if (event.currentTarget.value) {
-				if (setSearch) setSearch(event.currentTarget.value);
-				else
-					console.error(
-						"Something went wrong with the search component"
-					);
-			}
+			if (setSearch) setSearch(event.currentTarget.value);
+			else
+				console.error("Something went wrong with the search component");
 		}
 	}
 
