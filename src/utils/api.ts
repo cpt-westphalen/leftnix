@@ -1,7 +1,8 @@
 //The Movies Database API Utils
-const API_KEY = import.meta.env.VITE_API_KEY || "";
+export const API_KEY = import.meta.env.VITE_API_KEY || "";
 
 export const BASE_IMG_URL = "https://image.tmdb.org/t/p";
+export const BASE_VIDEO_URL = "https://www.youtube-nocookie.com/embed/";
 
 export const POPULAR_API_URL = [
 	`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&include_adult=false&include_video=true&page=1&primary_release_date.gte=2000-01-01&vote_count.gte=10000&vote_average.gte=7&sort_by=popularity.desc`,
