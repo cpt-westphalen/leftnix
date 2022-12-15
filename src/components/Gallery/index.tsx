@@ -81,8 +81,8 @@ export const Gallery = () => {
 				<Header />
 				<SetSelectedMovieContext.Provider value={setSelectedMovie}>
 					{loading ? "Loading..." : movieGalleriesArray}
+					{selectedMovie && <MovieModal movie={selectedMovie} />}
 				</SetSelectedMovieContext.Provider>
-				{selectedMovie && <MovieModal movie={selectedMovie} />}
 			</SearchContext.Provider>
 		</div>
 	);
